@@ -13,3 +13,5 @@ fi
 echo "$TIMESTAMP $MSG"
 echo "$TIMESTAMP $MSG" >> app.log
 
+MEM=$(free -h | grep Mem | awk '{print $3}')
+echo "$TIMESTAMP Memory in use: $MEM"
