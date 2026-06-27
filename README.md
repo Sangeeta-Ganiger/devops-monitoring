@@ -9,6 +9,7 @@ A lightweight bash-based monitoring system built as part of my DevOps learning j
 - Suppresses duplicate alerts to prevent alert fatigue
 - Auto-generates dated reports and cleans up files older than 7 days
 - Fully automated via cron jobs
+- CPU monitoring added
 
 ## Scripts
 - `monitor.sh` — disk usage monitor with OK/WARNING/CRITICAL thresholds
