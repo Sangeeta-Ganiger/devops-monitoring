@@ -1,6 +1,6 @@
 #!/bin/bash
 LOG=$LOG_PATH
-THRESHOLD=5
+THRESHOLD=3
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 LAST_COUNT_FILE=$LAST_COUNT_PATH
 
