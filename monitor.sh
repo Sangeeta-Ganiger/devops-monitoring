@@ -15,3 +15,5 @@ echo "$TIMESTAMP $MSG" >> app.log
 
 MEM=$(free -h | grep Mem | awk '{print $3}')
 echo "$TIMESTAMP Memory in use: $MEM"
+CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | cut -d'%' -f1)
+echo "$TIMESTAMP CPU usage: ${CPU}%"
