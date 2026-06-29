@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: my-webapp
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - database
+    networks:
+      - myapp-network
+
+  database:
+    image: postgres:15
+    container_name: my-database
+    environment:
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: myappdb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - myapp-network
+
+volumes:
+  postgres-data:
+
+networks:
+  myapp-network:
+    driver: bridge
