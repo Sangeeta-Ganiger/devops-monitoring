@@ -25,4 +25,5 @@ chmod 755 *.sh
 ```
 
 ## Skills demonstrated
-Linux bash scripting, cron automation, log analysis, Slack API integration, environment variables, file management
+- Linux bash scripting, cron automation, log analysis, Slack API integration, environment variables, file management
+- CI/CD pipeline with GitHub Actions (build, test, push to Docker Hub)
