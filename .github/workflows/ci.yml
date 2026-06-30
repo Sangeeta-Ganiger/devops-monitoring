@@ -1,6 +1,6 @@
 name: CI Pipeline
 
-#trigger run
+#triggerr run
 on:
   push:
     branches: [main]
