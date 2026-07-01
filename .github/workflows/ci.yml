@@ -38,3 +38,19 @@ jobs:
 
       - name: Confirm success
         run: echo "Image pushed to Docker Hub successfully"
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull sangeetaganiger/devops-webapp:latest
+            docker stop devops-webapp || true
+            docker rm devops-webapp || true
+            docker run -d \
+              --name devops-webapp \
+              --restart always \
+              sangeetaganiger/devops-webapp:latest
+            echo "Deployment successful"
