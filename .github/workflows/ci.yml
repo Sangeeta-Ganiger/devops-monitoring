@@ -1,11 +1,13 @@
 name: CI Pipeline
 
-#triggerr run
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+env:
+  IMAGE_NAME: sangeetaganiger/devops-webapp
 
 jobs:
   build-and-test:
@@ -16,11 +18,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t my-webapp ./webapp
+        run: docker build -t ${{ env.IMAGE_NAME }} ./webapp
 
       - name: Test container starts
         run: |
-          docker run -d --name test-app my-webapp
+          docker run -d --name test-app ${{ env.IMAGE_NAME }}
           sleep 3
           docker logs test-app
           docker stop test-app
@@ -31,26 +33,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Tag and push image
+      - name: Push image to Docker Hub
         run: |
-          docker tag my-webapp ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:latest
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.IMAGE_NAME }}:latest
+          docker push ${{ env.IMAGE_NAME }}:latest
 
       - name: Confirm success
-        run: echo "Image pushed to Docker Hub successfully"
-
-      - name: Deploy to server
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker pull sangeetaganiger/devops-webapp:latest
-            docker stop devops-webapp || true
-            docker rm devops-webapp || true
-            docker run -d \
-              --name devops-webapp \
-              --restart always \
-              sangeetaganiger/devops-webapp:latest
-            echo "Deployment successful"
+        run: echo "Build, test and push complete for ${{ env.IMAGE_NAME }}"
